@@ -4,6 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on("click", "input[type='submit']", function(e) {
+            if (!$('input[name="image"]').val()) {
+                e.preventDefault();
+                alert('Lütfen bir dosya yükleyin.');
+            }
+        });
+
+        $(document).on("paste", function(e) {
+            const items = e.originalEvent.clipboardData.items;
+
+            for (const item of items) {
+                if (item.type.startsWith('image/')) {
+                    const file = item.getAsFile();
+                    const input = $('#imageUploadFile')[0];
+
+
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+
+
+                    input.files = dataTransfer.files;
+
+                    break;
+                }
+            }
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -49,16 +78,7 @@
             background-color: #0056b3;
         }
     </style>
-</head>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resim Yükleme</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
 </head>
 
 <body>
@@ -67,38 +87,6 @@
         <input type="submit" value="Yükle">
     </form>
 
-    <script>
-        $(document).on("click", "input[type='submit']", function(e) {
-            if (!$('input[name="image"]').val()) {
-                e.preventDefault();
-                alert('Lütfen bir dosya yükleyin.');
-            }
-        });
-
-        $(document).on("paste", function(e) {
-            const items = e.originalEvent.clipboardData.items;
-
-            for (const item of items) {
-                if (item.type.startsWith('image/')) {
-                    const file = item.getAsFile();
-                    const input = $('#imageUploadFile')[0];
-
-
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-
-
-                    input.files = dataTransfer.files;
-
-                    break;
-                }
-            }
-        });
-    </script>
 </body>
-
-</html>
-
-
 
 </html>
